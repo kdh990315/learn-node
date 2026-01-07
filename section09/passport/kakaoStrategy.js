@@ -7,10 +7,12 @@ module.exports = () => {
     new KakaoStrategy(
       {
         clientID: process.env.KAKAO_ID,
+        clientSecret: process.env.KAKAO_SECRET,
         callbackURL: "/auth/kakao/callback",
       },
       async (accessToken, refreshToken, profile, done) => {
         console.log("profile", profile);
+        console.log(process.env.KAKAO_ID);
         try {
           const exUser = await User.findOne({
             where: {

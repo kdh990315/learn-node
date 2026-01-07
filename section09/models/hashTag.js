@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 
-class hashTag extends Sequelize.Model {
+class Hashtag extends Sequelize.Model {
   static initiate(sequelize) {
-    hashTag.init(
+    Hashtag.init(
       {
         title: {
           type: Sequelize.STRING(15),
@@ -14,8 +14,8 @@ class hashTag extends Sequelize.Model {
         timestamps: true,
         underscored: false,
         paranoid: false,
-        modelName: "Post",
-        tableName: "posts",
+        modelName: "Hashtag",
+        tableName: "hashtags",
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
       }
@@ -23,8 +23,8 @@ class hashTag extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.hashTag.belongsToMany(db.Post, { through: "PostHashtag" });
+    db.Hashtag.belongsToMany(db.Post, { through: "PostHashtag" });
   }
 }
 
-module.exports = hashTag;
+module.exports = Hashtag;

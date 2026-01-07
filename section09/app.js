@@ -4,13 +4,15 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
+dotenv.config();
 const morgan = require("morgan");
 const passport = require("passport");
 const { sequelize } = require("./models");
 
-dotenv.config();
 const pageRouter = require("./routes/page");
 const authRouter = require("./routes/auth");
+const postRouter = require("./routes/post");
+const userRouter = require("./routes/user");
 const passportConfig = require("./passport");
 
 const app = express();
@@ -34,6 +36,7 @@ sequelize
 
 app.use(morgan("dev")); // 개발 -> dev , 서비스 -> combined
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/img", express.static(path.join(__dirname, "uploads")));
 app.use(express.json()); // requset.body를 ajax json 요청으로부터
 app.use(express.urlencoded({ extended: false })); // request.body form으로부터
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -53,6 +56,8 @@ app.use(passport.session()); // connect.sid라는 이름으로 세션 쿠키가 
 
 app.use("/", pageRouter);
 app.use("/auth", authRouter);
+app.use("/post", postRouter);
+app.use("/user", userRouter);
 
 // NOT FOUND
 app.use((request, response, next) => {
