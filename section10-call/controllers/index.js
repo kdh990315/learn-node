@@ -76,3 +76,7 @@ exports.searchByHashtag = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.renderMain = (request, response, next) => {
+  response.render("main", { key: process.env.CLIENT_SECRET });
+};
